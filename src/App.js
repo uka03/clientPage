@@ -14,15 +14,17 @@ function App() {
   const [closeModal, setCloseModal] = useState();
   const [login, setLogin] = useState();
   const [data, setdata] = useState();
+  const [userdata, setUserData] = useState();
   const [refresh, setRefesh] = useState("")
   useEffect(() => {
     axios.get("http://localhost:2020/product").then((res) => setdata(res.data));
+    axios.get("http://localhost:2020/users").then((res) => setUserData(res.data));
   }, [refresh]);
 
   return <>{data && (
     <div className="App">
       <Header closeModal={setCloseModal} login={login} setLogin={setLogin} data={data} />
-      {closeModal ? <SignIn closeModal={setCloseModal} login={setLogin} data={data} /> : null}
+      {closeModal ? <SignIn closeModal={setCloseModal} login={setLogin} data={data} userData={userdata} /> : null}
       <Routes>
         <Route path={"/"} element={<Main data={data} />} />
         <Route path={`/product/:id`} element={<ProductCard data={data} />} />
