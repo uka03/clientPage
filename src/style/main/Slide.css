@@ -1,0 +1,74 @@
+.slide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #003585;
+}
+.slideImg {
+  position: relative;
+}
+.slideImg img {
+  height: 400px;
+}
+
+.price {
+  position: absolute;
+  top: 60%;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #a7f65c;
+  width: 120px;
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  border-radius: 50%;
+  font-weight: 800;
+  color: white;
+}
+
+.slideContent {
+  padding: 100px;
+}
+
+.slideName {
+  font-size: 50px;
+  color: #4abeff;
+  font-weight: 700;
+  margin: 0;
+}
+.slideTitle {
+  font-size: 20px;
+  color: #4abeff;
+  font-weight: 500;
+  margin: 0;
+}
+
+.btns {
+  margin-top: 70px;
+  display: flex;
+  gap: 21px;
+  align-items: center;
+}
+
+.shopNow {
+  padding: 18px 32px;
+  background-color: white;
+  border-radius: 40px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #003585;
+}
+
+.viewMore {
+  padding: 18px 32px;
+  background-color: transparent;
+  border-radius: 40px;
+  border: 1px solid #a7f65c;
+  font-size: 16px;
+  font-weight: 600;
+  color: #a7f65c;
+}

@@ -1,0 +1,19 @@
+.speical {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+
+.left {
+  width: 47%;
+  height: 780px;
+}
+
+.right {
+  width: 50%;
+  height: 780px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

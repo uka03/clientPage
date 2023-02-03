@@ -1,0 +1,44 @@
+.ads {
+  margin-top: 60px;
+  background-image: url(../../img/ads.png);
+  border-radius: 20px;
+  height: 417px;
+  display: flex;
+  justify-content: end;
+}
+
+.adsContent {
+  width: 400px;
+  margin: 50px 100px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.adsContent h3 {
+  background-color: white;
+  border-radius: 20px;
+  padding: 10px 30px;
+}
+
+.adsContent h2 {
+  color: #a7f65c;
+  font-size: 42px;
+  line-height: 61px;
+  margin: 0;
+}
+
+.adsContent p {
+  color: white;
+  font-size: 18px;
+}
+.outlineBtn {
+  background-color: transparent;
+  border: 1px solid #a7f65c;
+  border-radius: 40px;
+  padding: 15px 40px;
+  font-size: 24px;
+  color: white;
+}

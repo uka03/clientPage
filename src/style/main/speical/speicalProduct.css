@@ -1,0 +1,47 @@
+.speicalProduct {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 30px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+.SProductImg {
+  width: 100%;
+  height: 60%;
+}
+
+.SProductImg img {
+  width: 100%;
+  height: 100%;
+}
+.SProductContent {
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.SProductContent h2 {
+  color: #003585;
+  font-size: 24px;
+  margin: 0;
+}
+
+.SProductContent p {
+  font-size: 18px;
+  color: #a4a4a4;
+}
+
+.SProductContent button {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #a7f65c;
+  border-radius: 50px;
+  border: none;
+  color: #003585;
+  font-weight: 600;
+}
