@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import { DataContext } from "../App";
 import "../style/ProductCard.css";
 
 import Quantity from "./Quantity";
 export default function ProductCard(prop) {
-  const { data } = prop;
+  const { data } = useContext(DataContext);
+
   const [desc, setdesc] = useState(true);
   const test = useParams();
   console.log(test);

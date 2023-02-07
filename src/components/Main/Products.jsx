@@ -1,8 +1,10 @@
 import Product from "./Product";
 import "../../style/main/Products.css";
+import { useContext } from "react";
+import { DataContext } from "../../App";
 
 export default function Products(prop) {
-  const { data } = prop;
+  const { data } = useContext(DataContext);
   const { category } = prop;
 
   return (

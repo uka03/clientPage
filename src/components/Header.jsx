@@ -3,9 +3,11 @@ import logo from "../img/logo.svg";
 import user from "../img/user.svg";
 import cart from "../img/shopping-cart.svg";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DataContext } from "../App";
 
-export default function Header(prop) {
-  const { login, closeModal, setLogin } = prop;
+export default function Header() {
+  const { setLogin, login, setCloseModal } = useContext(DataContext);
 
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ export default function Header(prop) {
               className="signIn"
               onClick={() => {
                 navigate("/");
-                closeModal(false);
+                setCloseModal(false);
                 setLogin(false);
               }}
             >
@@ -40,7 +42,7 @@ export default function Header(prop) {
             <button
               className="signIn"
               onClick={() => {
-                closeModal(true);
+                setCloseModal(true);
               }}
             >
               <img src={user} alt="" /> Sign in

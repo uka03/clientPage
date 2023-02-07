@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -9,12 +9,13 @@ import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
 import axios from "axios";
 
+export const DataContext = createContext()
 function App() {
 
   const [closeModal, setCloseModal] = useState();
   const [login, setLogin] = useState();
   const [data, setdata] = useState();
-  const [userdata, setUserData] = useState();
+  const [userData, setUserData] = useState();
   const [refresh, setRefesh] = useState("")
   useEffect(() => {
     axios.get("http://localhost:2020/product").then((res) => setdata(res.data));
@@ -23,13 +24,16 @@ function App() {
 
   return <>{data && (
     <div className="App">
-      <Header closeModal={setCloseModal} login={login} setLogin={setLogin} data={data} />
-      {closeModal ? <SignIn closeModal={setCloseModal} login={setLogin} data={data} userData={userdata} /> : null}
-      <Routes>
-        <Route path={"/"} element={<Main data={data} />} />
-        <Route path={`/product/:id`} element={<ProductCard data={data} />} />
-      </Routes>
-      <Footer />
+      <DataContext.Provider value={{ data, userData, setCloseModal, setLogin, login }}>
+        <Header />
+        {closeModal ? <SignIn /> : null}
+        <Routes>
+          <Route path={"/"} element={<Main />} />
+          <Route path={`/product/:id`} element={<ProductCard />} />
+        </Routes>
+        <Footer />
+      </DataContext.Provider>
+
     </div>
   )}</>
 }

@@ -4,10 +4,11 @@ import Products from "./Main/Products";
 import Navbar from "./Main/Navbar";
 import Ads from "./Main/Ads";
 import Speical from "./Main/Speical";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { DataContext } from "../App";
 
 export default function Main(prop) {
-  const { data } = prop;
+  const { data } = useContext(DataContext);
   let [category, setCategory] = useState("");
   function catolog(e) {
     setCategory(e);
@@ -23,10 +24,10 @@ export default function Main(prop) {
           price={data[0].price}
         />
         <div className="container">
-          <Navbar catolog={catolog} data={data} />
-          <Products data={data} category={category} />
+          <Navbar catolog={catolog} />
+          <Products category={category} />
           <Ads />
-          <Speical data={data} />
+          <Speical />
         </div>
       </div>
     )

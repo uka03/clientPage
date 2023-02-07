@@ -2,11 +2,13 @@ import "../style/signIn.css";
 import logo from "../img/logo2.svg";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { DataContext } from "../App";
 
 export default function SignIn(prop) {
-  const { closeModal, login } = prop;
+  const { setCloseModal, setLogin } = useContext(DataContext);
+
   const [userData, setUserData] = useState();
   const [openRegister, setOpenRegister] = useState(true);
   const [oldRegitser, setOldRegitser] = useState(false);
@@ -29,8 +31,8 @@ export default function SignIn(prop) {
         if (user.email === username || user.phone_number === username) {
           if (user.password === password) {
             console.log("amjilttai");
-            login(true);
-            closeModal(false);
+            setLogin(true);
+            setCloseModal(false);
           } else {
             alert("Нууц үг эсвэл Мэйл буруу байна");
           }
@@ -93,7 +95,7 @@ export default function SignIn(prop) {
           axios
             .post("http://localhost:2020/users", userObject)
             .then((res) => console.log(res));
-          closeModal(false);
+          setCloseModal(false);
           setOpenRegister(true);
         } else {
           alert("Нууц үг 8 аас дээш үсэгтэй байх");
@@ -111,7 +113,7 @@ export default function SignIn(prop) {
           <img src={logo} alt="" />
           <button
             onClick={() => {
-              closeModal(false);
+              setCloseModal(false);
               setOpenRegister(true);
             }}
           >

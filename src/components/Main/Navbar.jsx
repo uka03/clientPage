@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { DataContext } from "../../App";
 import "../../style/main/Navbar.css";
 
 export default function Navbar(prop) {
-  const { catolog, data } = prop;
+  const { data } = useContext(DataContext);
+  const { catolog } = prop;
   const [category, setCategory] = useState("all");
   catolog(category);
   let tempCategory = [];
