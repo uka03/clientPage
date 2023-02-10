@@ -35,12 +35,14 @@
   color: #4a4a4a;
   margin: 0;
 }
-
+.pro {
+  position: relative;
+}
 .productCart {
   width: 45px;
   height: 45px;
   position: absolute;
-  top: 28px;
+  bottom: 28px;
   right: 28px;
   border-radius: 50%;
   background-color: rgb(196, 196, 196);
@@ -50,8 +52,13 @@
   justify-content: center;
   padding: 10px;
   box-sizing: border-box;
+  transition: all 0.5s;
 }
 .productCart img {
   width: 20px;
-  margin-top: 10px;
+}
+
+.productCart:hover {
+  background-color: #003585;
+  transition: all 0.5s;
 }

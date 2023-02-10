@@ -4,15 +4,16 @@ import { useContext } from "react";
 import { DataContext } from "../../App";
 
 export default function Products(prop) {
-  const { data } = useContext(DataContext);
+  const { data, login } = useContext(DataContext);
   const { category } = prop;
 
   return (
-    <div className="Products container">
+    <div className="Products ">
       {data.map((pro, index) => {
         if (category === "all" || pro.category === category) {
           return (
             <Product
+              login={login}
               key={index}
               name={pro.name}
               title={pro.description}

@@ -13,7 +13,7 @@ export const DataContext = createContext()
 function App() {
 
   const [closeModal, setCloseModal] = useState();
-  const [login, setLogin] = useState();
+  const [login, setLogin] = useState(false);
   const [data, setdata] = useState();
   const [userData, setUserData] = useState();
   const [refresh, setRefesh] = useState("")

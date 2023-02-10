@@ -2,3 +2,23 @@
   width: 1300px;
   margin: 0 auto;
 }
+
+.justify-self-end {
+  justify-self: end;
+}
+
+.text-royal {
+  color: #003282;
+}
+
+.border-royal-bottom {
+  border: none;
+  border-bottom: 1px solid #003282;
+}
+.bg-royal {
+  background-color: #003282;
+}
+
+.h-10 {
+  height: 100px;
+}
