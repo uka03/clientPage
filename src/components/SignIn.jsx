@@ -25,13 +25,14 @@ export default function SignIn(prop) {
     e.preventDefault();
     let username = e.target.name.value;
     let password = e.target.password.value;
-    console.log(username);
+
     userData &&
       userData.map((user) => {
         if (user.email === username || user.phone_number === username) {
           if (user.password === password) {
-            console.log("amjilttai");
-            setLogin(true);
+            localStorage.setItem("login", true);
+            setLogin(JSON.parse(localStorage.getItem("login")));
+            localStorage.setItem("userId", user.id);
             setCloseModal(false);
           } else {
             alert("Нууц үг эсвэл Мэйл буруу байна");

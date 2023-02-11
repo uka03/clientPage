@@ -8,6 +8,7 @@ import { DataContext } from "../App";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import emptyCart from "../img/empty-cart.png";
+import axios from "axios";
 export default function Header() {
   const { setLogin, login, setCloseModal, data } = useContext(DataContext);
   const [offCanvas, setOffCanvas] = useState(false);
@@ -17,8 +18,6 @@ export default function Header() {
   let basket = [];
   let totalPrice = 0;
   if (ids) {
-    console.log(ids);
-
     data.find((e) => {
       ids.map((element) => {
         if (e.id === element) {
@@ -26,12 +25,34 @@ export default function Header() {
         }
       });
     });
-    console.log(basket);
   }
   basket.map((e) => {
     totalPrice = totalPrice + e.price;
   });
   let totalOrder = basket.length;
+  function orderHandler() {
+    let fullDate = new Date();
+    let date = `${fullDate.getDate()}/${
+      fullDate.getMonth() + 1
+    }/${fullDate.getFullYear()}`;
+    let userId = localStorage.getItem("userId");
+    let newOrder = {
+      date: date,
+      userId: userId,
+      status: false,
+      products: ids,
+      pay: 1,
+    };
+    axios
+      .post("http://localhost:2020/order", newOrder)
+      .then((res) => console.log(res));
+    localStorage.removeItem("basket");
+  }
+  function deleteOrderPro(index) {
+    ids.splice(index, 1);
+    localStorage.setItem("basket", JSON.stringify(ids));
+    console.log(ids);
+  }
   return (
     <div className="header">
       <div className="headerContent">
@@ -54,7 +75,8 @@ export default function Header() {
               onClick={() => {
                 navigate("/");
                 setCloseModal(false);
-                setLogin(false);
+                localStorage.setItem("login", false);
+                setLogin(JSON.parse(localStorage.getItem("login")));
               }}
             >
               <img src={user} alt="" /> Log out
@@ -91,16 +113,25 @@ export default function Header() {
               <input
                 type="button"
                 value={"сагс хоослох"}
-                className="text-royal  bg-transparent border-royal-bottom"
+                className="text-royal   bg-transparent border-royal-bottom"
+                onClick={() => {
+                  localStorage.removeItem("basket");
+                }}
               />
             </Offcanvas.Header>
             <Offcanvas.Body className="d-flex h-100 w-100 align-items-center justify-content-between flex-column position-relative p-0">
               <div className="basketMain text-royal h-100 w-100 ">
                 {ids ? (
-                  basket.map((order) => {
+                  basket.map((order, index) => {
                     return (
-                      <div className="d-flex gap-5 border p-3 mb-4 rounded-4 align-items-center  position-relative h-10 w-100">
-                        <div className="position-absolute top-0 end-0 me-3 fs-5">
+                      <div
+                        key={index}
+                        className="d-flex gap-5 border p-3 mb-4 rounded-4 align-items-center  position-relative h-10 w-100"
+                      >
+                        <div
+                          className="position-absolute top-0 end-0 me-3 fs-5"
+                          onClick={() => deleteOrderPro(index)}
+                        >
                           X
                         </div>
                         <div className="w-25 h-100">
@@ -136,6 +167,7 @@ export default function Header() {
                       ? "w-100 border-0  rounded-3 bg-royal p-3 fs-5 border border-0 text-white"
                       : "w-100 rounded-3 p-3 fs-5  text-secondary  border border-0"
                   }
+                  onClick={orderHandler}
                   // disabled
                 >
                   захиалах
