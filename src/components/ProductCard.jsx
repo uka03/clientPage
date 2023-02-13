@@ -9,7 +9,32 @@ export default function ProductCard(prop) {
 
   const [desc, setdesc] = useState(true);
   const test = useParams();
-  console.log(test);
+
+  const [count, setCount] = useState(0);
+
+  function counter(e, stock) {
+    let oper = e.target.innerText;
+
+    if (oper === "+" && count < stock) {
+      setCount(count + 1);
+    } else if (oper === "-" && count > 0) {
+      setCount(count - 1);
+    }
+  }
+  function basketHandler(id) {
+    let login = JSON.parse(localStorage.getItem("login"));
+    if (login) {
+      let idGroup = [];
+      for (let i = 0; i < count; i++) {
+        // const element = array[index];
+        console.log(id);
+        idGroup.push(id);
+      }
+      let basket = JSON.parse(localStorage.getItem("basket"));
+      basket && idGroup.push(...basket);
+      localStorage.setItem("basket", JSON.stringify(idGroup));
+    }
+  }
 
   return data.map((product) => {
     if (product.id === test.id) {
@@ -36,10 +61,16 @@ export default function ProductCard(prop) {
               <p>SALE: {product.sale}%</p>
               <p className="quantity">
                 Quantity:
-                <Quantity stock={product.stock} />
+                <div className="quantity">
+                  <button onClick={(e) => counter(e, product.stock)}>-</button>
+                  <p>{count}</p>
+                  <button onClick={(e) => counter(e, product.stock)}>+</button>
+                </div>
               </p>
               <div className="productCardBtns">
-                <button>Add to cart</button>
+                <button onClick={() => basketHandler(product.id)}>
+                  Add to cart
+                </button>
                 <button>Buy it now</button>
               </div>
               <hr />
