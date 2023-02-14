@@ -8,11 +8,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../App";
 
 export default function Main(prop) {
-  const { data } = useContext(DataContext);
-  let [category, setCategory] = useState("");
-  function catolog(e) {
-    setCategory(e);
-  }
+  const { data, filter, setFilter } = useContext(DataContext);
 
   return (
     data && (
@@ -24,8 +20,8 @@ export default function Main(prop) {
           price={data[0].price}
         />
         <div className="container">
-          <Navbar catolog={catolog} />
-          <Products category={category} />
+          <Navbar />
+          <Products filter={filter} />
           <Ads />
           <Speical />
         </div>

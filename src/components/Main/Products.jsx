@@ -5,23 +5,25 @@ import { DataContext } from "../../App";
 
 export default function Products(prop) {
   const { data, login } = useContext(DataContext);
-  const { category } = prop;
+  const { filter } = prop;
+  console.log(filter);
 
   return (
     <div className="Products ">
       {data.map((pro, index) => {
-        if (category === "all" || pro.category === category) {
+        if (filter === "all" || pro.category === filter) {
           return (
-            <Product
-              login={login}
-              key={index}
-              name={pro.name}
-              title={pro.description}
-              category={pro.category}
-              price={pro.price}
-              img={pro.image}
-              id={pro.id}
-            />
+            <div className="" key={index}>
+              <Product
+                login={login}
+                name={pro.name}
+                title={pro.description}
+                category={pro.category}
+                price={pro.price}
+                img={pro.image}
+                id={pro.id}
+              />
+            </div>
           );
         }
       })}

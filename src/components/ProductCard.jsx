@@ -36,10 +36,10 @@ export default function ProductCard(prop) {
     }
   }
 
-  return data.map((product) => {
+  return data.map((product, index) => {
     if (product.id === test.id) {
       return (
-        <div className="ProductCard container">
+        <div className="ProductCard container" key={index}>
           <p className="url">
             home{">"}all{">"}4-door flex
           </p>
@@ -59,14 +59,14 @@ export default function ProductCard(prop) {
               <p>Product ID: {product.id}</p>
               <p>Product Stock: {product.stock}</p>
               <p>SALE: {product.sale}%</p>
-              <p className="quantity">
+              <div className="quantity">
                 Quantity:
                 <div className="quantity">
                   <button onClick={(e) => counter(e, product.stock)}>-</button>
                   <p>{count}</p>
                   <button onClick={(e) => counter(e, product.stock)}>+</button>
                 </div>
-              </p>
+              </div>
               <div className="productCardBtns">
                 <button onClick={() => basketHandler(product.id)}>
                   Add to cart

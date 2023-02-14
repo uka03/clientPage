@@ -3,10 +3,8 @@ import { DataContext } from "../../App";
 import "../../style/main/Navbar.css";
 
 export default function Navbar(prop) {
-  const { data } = useContext(DataContext);
-  const { catolog } = prop;
-  const [category, setCategory] = useState("all");
-  catolog(category);
+  const { data, filter, setFilter } = useContext(DataContext);
+
   let tempCategory = [];
 
   return (
@@ -16,7 +14,7 @@ export default function Navbar(prop) {
         <li className="navbarItem ">
           <button
             onClick={() => {
-              setCategory("all");
+              setFilter("all");
             }}
           >
             All
@@ -26,10 +24,10 @@ export default function Navbar(prop) {
           if (!tempCategory.includes(e.category)) {
             tempCategory.push(e.category);
             return (
-              <li className="navbarItem ">
+              <li className="navbarItem " key={i}>
                 <button
                   onClick={() => {
-                    setCategory(e.category);
+                    setFilter(e.category);
                   }}
                 >
                   {e.category}

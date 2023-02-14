@@ -154,10 +154,10 @@ export default function SignIn(prop) {
               <button className="formButton" id="Signin" type="submit">
                 Нэвтрэх
               </button>
-              <p className="or">
-                <span class="lineText">эсвэл</span>
+              <div className="or">
+                <span className="lineText">эсвэл</span>
                 <p className="line"></p>
-              </p>
+              </div>
             </>
           ) : (
             <>

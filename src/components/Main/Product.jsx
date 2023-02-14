@@ -3,7 +3,7 @@ import cart from "../../img/shopping-cart.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 export default function Product(prop) {
-  const { key, login } = prop;
+  const { login } = prop;
 
   const navigate = useNavigate();
   function productpage() {
@@ -23,7 +23,7 @@ export default function Product(prop) {
   }
   return (
     <div className="pro">
-      <div className="product" onClick={productpage} key={key}>
+      <div className="product" onClick={productpage}>
         <img src={prop.img} alt="" />
         <div className="productContent">
           <h5 className="productTitle">{prop.name}</h5>

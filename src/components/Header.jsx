@@ -9,14 +9,17 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import emptyCart from "../img/empty-cart.png";
 import axios from "axios";
-export default function Header() {
-  const { setLogin, login, setCloseModal, data } = useContext(DataContext);
-  const [offCanvas, setOffCanvas] = useState(false);
 
+export default function Header() {
+  const { setLogin, login, setCloseModal, data, filter, setFilter } =
+    useContext(DataContext);
+  const [offCanvas, setOffCanvas] = useState(false);
   const navigate = useNavigate();
+
   let ids = JSON.parse(localStorage.getItem("basket"));
   let basket = [];
   let totalPrice = 0;
+
   if (ids) {
     data.find((e) => {
       ids.map((element) => {
@@ -29,7 +32,9 @@ export default function Header() {
   basket.map((e) => {
     totalPrice = totalPrice + e.price;
   });
+
   let totalOrder = basket.length;
+
   function orderHandler() {
     let fullDate = new Date();
     let date = `${fullDate.getDate()}/${
@@ -43,16 +48,25 @@ export default function Header() {
       products: ids,
       pay: 1,
     };
+
     axios
       .post("http://localhost:2020/order", newOrder)
       .then((res) => console.log(res));
     localStorage.removeItem("basket");
   }
+
   function deleteOrderPro(index) {
     ids.splice(index, 1);
     localStorage.setItem("basket", JSON.stringify(ids));
     console.log(ids);
   }
+
+  function searchHandler(e) {
+    e.preventDefault();
+    let searchInput = e.target.search.value;
+    setFilter(searchInput);
+  }
+
   return (
     <div className="header">
       <div className="headerContent">
@@ -60,14 +74,17 @@ export default function Header() {
           <img src={logo} className="logo" alt="" />
         </a>
 
-        <div className="search">
+        <form className="search" onSubmit={searchHandler}>
           <input
             type="text"
+            name="search"
             className="searchInput"
             placeholder="Search any things"
           />
-          <button className="searchBtn">Search</button>
-        </div>
+          <button className="searchBtn" type="submit">
+            Search
+          </button>
+        </form>
         <div className="profile">
           {login ? (
             <button
@@ -77,6 +94,7 @@ export default function Header() {
                 setCloseModal(false);
                 localStorage.setItem("login", false);
                 setLogin(JSON.parse(localStorage.getItem("login")));
+                localStorage.removeItem("userId");
               }}
             >
               <img src={user} alt="" /> Log out
