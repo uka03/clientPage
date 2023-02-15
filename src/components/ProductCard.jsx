@@ -24,15 +24,25 @@ export default function ProductCard(prop) {
   function basketHandler(id) {
     let login = JSON.parse(localStorage.getItem("login"));
     if (login) {
-      let idGroup = [];
-      for (let i = 0; i < count; i++) {
-        // const element = array[index];
-        console.log(id);
-        idGroup.push(id);
-      }
+      let basketItem = { id, stock: count };
       let basket = JSON.parse(localStorage.getItem("basket"));
-      basket && idGroup.push(...basket);
-      localStorage.setItem("basket", JSON.stringify(idGroup));
+      if (basket) {
+        let findItem = basket.find((item) => item.id == basketItem.id);
+        let newStock = findItem.stock;
+        if (findItem) {
+          newStock = newStock + count;
+          basket[basket.indexOf(findItem)].stock = newStock;
+          console.log(basket);
+          localStorage.setItem("basket", JSON.stringify(basket));
+        } else {
+          localStorage.setItem(
+            "basket",
+            JSON.stringify([...basket, basketItem])
+          );
+        }
+      } else {
+        localStorage.setItem("basket", JSON.stringify([basketItem]));
+      }
     }
   }
 

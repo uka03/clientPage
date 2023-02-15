@@ -11,12 +11,21 @@ export default function Product(prop) {
     console.log("working");
   }
   function basketHandler() {
-    let basket = [prop.id];
-    let temp = JSON.parse(localStorage.getItem("basket"));
-    if (temp) {
-      basket = [...temp, prop.id];
+    let basketItem = { id: prop.id, stock: 1 };
+    let basket = JSON.parse(localStorage.getItem("basket"));
+    if (basket) {
+      let findItem = basket.find((item) => item.id == basketItem.id);
+      if (findItem) {
+        findItem.stock = findItem.stock + 1;
+
+        basket[basket.indexOf(findItem)].stock = findItem.stock;
+        localStorage.setItem("basket", JSON.stringify(basket));
+      } else {
+        localStorage.setItem("basket", JSON.stringify([...basket, basketItem]));
+      }
+    } else {
+      localStorage.setItem("basket", JSON.stringify([basketItem]));
     }
-    localStorage.setItem("basket", JSON.stringify(basket));
   }
   function alerthandler() {
     alert("та нэвтэрч орох хэрэгтэй ????");

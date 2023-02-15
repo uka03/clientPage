@@ -9,31 +9,34 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import emptyCart from "../img/empty-cart.png";
 import axios from "axios";
+import { useEffect } from "react";
 
 export default function Header() {
-  const { setLogin, login, setCloseModal, data, filter, setFilter } =
+  const { setLogin, login, setCloseModal, data, setFilter } =
     useContext(DataContext);
   const [offCanvas, setOffCanvas] = useState(false);
   const navigate = useNavigate();
+  const [render, setRender] = useState(false);
+  const [totalOrder, setTotalOrder] = useState(0);
 
-  let ids = JSON.parse(localStorage.getItem("basket"));
+  let basketItems = JSON.parse(localStorage.getItem("basket"));
   let basket = [];
   let totalPrice = 0;
 
-  if (ids) {
-    data.find((e) => {
-      ids.map((element) => {
-        if (e.id === element) {
-          basket.push(e);
+  if (basketItems) {
+    data.find((product) => {
+      basketItems.map((item) => {
+        if (product.id === item.id) {
+          basket.push(product);
+          totalPrice = (totalPrice + product.price) * item.stock;
         }
       });
     });
   }
-  basket.map((e) => {
-    totalPrice = totalPrice + e.price;
-  });
 
-  let totalOrder = basket.length;
+  useEffect(() => {
+    setTotalOrder(ordernumber);
+  }, [basket.length]);
 
   function orderHandler() {
     let fullDate = new Date();
@@ -42,23 +45,34 @@ export default function Header() {
     }/${fullDate.getFullYear()}`;
     let userId = localStorage.getItem("userId");
     let newOrder = {
+      totalPrice,
       date: date,
       userId: userId,
       status: false,
-      products: ids,
+      products: basketItems,
       pay: 1,
     };
 
     axios
       .post("http://localhost:2020/order", newOrder)
       .then((res) => console.log(res));
+    basketItems.map((item) => {
+      axios.put(`http://localhost:2020/products/${item.id}`, {
+        stock: item.stock,
+      });
+    });
     localStorage.removeItem("basket");
+    setRender(!render);
   }
 
   function deleteOrderPro(index) {
-    ids.splice(index, 1);
-    localStorage.setItem("basket", JSON.stringify(ids));
-    console.log(ids);
+    if (basketItems.length > 1) {
+      basketItems.splice(index, 1);
+      localStorage.setItem("basket", JSON.stringify(basketItems));
+    } else {
+      localStorage.removeItem("basket");
+    }
+    setRender(!render);
   }
 
   function searchHandler(e) {
@@ -139,8 +153,12 @@ export default function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body className="d-flex h-100 w-100 align-items-center justify-content-between flex-column position-relative p-0">
               <div className="basketMain text-royal h-100 w-100 ">
-                {ids ? (
+                {basketItems ? (
                   basket.map((order, index) => {
+                    let findItem = basketItems.find(
+                      (item) => order.id == item.id
+                    );
+                    console.log(findItem);
                     return (
                       <div
                         key={index}
@@ -160,8 +178,9 @@ export default function Header() {
                           />
                         </div>
                         <div className="d-flex flex-column">
-                          <p>{order.name}</p>
-                          <p>Price : {order.price} </p>
+                          <p className="m-0">{order.name}</p>
+                          <p className="m-0">Price : {order.price} </p>
+                          <p className="m-0">quantity : {findItem.stock}</p>
                         </div>
                       </div>
                     );
